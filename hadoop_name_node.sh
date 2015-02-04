@@ -13,24 +13,24 @@ HADOOP_NODE_NAME_INST_ID="$(aws ec2 run-instances \
 # ${HADOOP_NODE_NAME_INST_ID}
 aws ec2 create-tags \
 --resources ${HADOOP_NODE_NAME_INST_ID} \
---tag Key=Name,Value=qqq
+--tag Key=Name,Value=HadoopNameNode
 sleep 60
 
 # Get Public IP Address of Hadoop Name Node
 PUB_IP_ADRS_HDNN="$(aws ec2 describe-instances \
- 	--filters 'Name=tag:Name,Values=qqq' \
+ 	--filters 'Name=tag:Name,Values=HadoopNameNode' \
  	--output text \
  	--query 'Reservations[*].Instances[*].PublicIpAddress')"
 
 # Save Private IP Address of instance to Variable
 INETADRS="$(aws ec2 describe-instances \
-	--filters 'Name=tag:Name,Values=qqq' \
+	--filters 'Name=tag:Name,Values=HadoopNameNode' \
 	--output text \
 	--query 'Reservations[*].Instances[*].PrivateIpAddress')"
 
 # Save Public DNS of instance to Variable
 PUBDNS="$(aws ec2 describe-instances \
-	--filters 'Name=tag:Name,Values=qqq' \
+	--filters 'Name=tag:Name,Values=HadoopNameNode' \
 	--output text \
 	--query 'Reservations[*].Instances[*].PublicDnsName')"
 
